@@ -25,8 +25,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/apache/trafficcontrol/traffic_ops/traffic_ops_golang/util/ims"
-
 	"github.com/apache/trafficcontrol/lib/go-log"
 	"github.com/apache/trafficcontrol/lib/go-tc"
 	"github.com/apache/trafficcontrol/lib/go-tc/tovalidate"
@@ -35,6 +33,7 @@ import (
 	"github.com/apache/trafficcontrol/traffic_ops/traffic_ops_golang/auth"
 	"github.com/apache/trafficcontrol/traffic_ops/traffic_ops_golang/dbhelpers"
 	"github.com/apache/trafficcontrol/traffic_ops/traffic_ops_golang/parameter"
+	"github.com/apache/trafficcontrol/traffic_ops/traffic_ops_golang/util/ims"
 
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/jmoiron/sqlx"
@@ -150,7 +149,7 @@ func (prof *TOProfile) Read(h http.Header, useIMS bool) ([]interface{}, error, e
 
 	rows, err := prof.ReqInfo.Tx.NamedQuery(query, queryValues)
 	if err != nil {
-		return nil, errors.New("bad request found"), errors.New("profile read querying: " + err.Error()), http.StatusBadRequest, nil
+		return nil, err, errors.New("profile read querying: " + err.Error()), http.StatusBadRequest, nil
 	}
 	defer rows.Close()
 
