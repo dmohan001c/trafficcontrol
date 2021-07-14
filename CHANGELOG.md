@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - t3c: add flag to wait for parents in syncds mode
 - t3c: Change syncds so that it only warns on package version mismatch.
 - atstccfg: add ##REFETCH## support to regex_revalidate.config processing.
+- Added t3c caching Traffic Ops data and using If-Modified-Since to avoid unnecessary requests.
 - Added a Traffic Monitor integration test framework.
 - Added `traffic_ops/app/db/traffic_vault_migrate` to help with migrating Traffic Ops Traffic Vault backends
 - Added a tool at `/traffic_ops/app/db/reencrypt` to re-encrypt the data in the Postgres Traffic Vault with a new key.
@@ -106,10 +107,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - The `riak.conf` config file and its corresponding `--riakcfg` option in `traffic_ops_golang` have been deprecated. Please use `"traffic_vault_backend": "riak"` and `"traffic_vault_config"` (with the existing contents of riak.conf) instead.
 - The Traffic Ops API route `GET /api/{version}/vault/bucket/{bucket}/key/{key}/values` has been deprecated and will no longer be available as of Traffic Ops API v4
 - The Traffic Ops API route `POST /api/{version}/deliveryservices/request` has been deprecated and will no longer be available as of Traffic Ops API v4
+- The Traffic Ops API routes `GET /api/{version}/cachegroupparameters`, `POST /api/{version}/cachegroupparameters`, `GET /api/{version}/cachegroups/{id}/parameters`, and `DELETE /api/{version}/cachegroupparameters/{cachegroupID}/{parameterId}` have been deprecated and will no longer be available as of Traffic Ops API v4
 - The `riak_port` option in cdn.conf is now deprecated. Please use the `"port"` field in `traffic_vault_config` instead.
 - The `traffic_ops_ort.pl` tool has been deprecated in favor of `t3c`, and will be removed in the next major version.
 
 ### Removed
+- Removed the unused `backend_max_connections` option from `cdn.conf`.
 - Removed the `Long Description 2` and `Long Description 3` fields of `DeliveryService` from the UI, and changed the backend so that routes corresponding API 4.0 and above no longer accept or return these fields. 
 - The Perl implementation of Traffic Ops has been stripped out, along with the Go implementation's "fall-back to Perl" behavior.
 - Traffic Ops no longer includes an `app/public` directory, as the static webserver has been removed along with the Perl Traffic Ops implementation. Traffic Ops also no longer attempts to download MaxMind GeoIP City databases when running the Traffic Ops Postinstall script.
